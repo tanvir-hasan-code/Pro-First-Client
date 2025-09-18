@@ -11,6 +11,7 @@ const Banner = () => {
 	  infiniteLoop={true}
 	  autoPlay={true}
 		  autoFocus={true}
+		  showThumbs={false}
 		  className="my-7"
 	  >
       <div>
