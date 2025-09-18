@@ -32,7 +32,7 @@ const HowItWorks = () => {
   return (
     <section className="py-12 bg-base-200">
       <div className="container mx-auto text-center px-4">
-        <h2 className="text-3xl font-bold mb-6">How It Works</h2>
+        <h2 className="text-3xl font-bold text-primary mb-6">How It Works</h2>
         <p className="max-w-2xl mx-auto mb-10 text-gray-600">
           Follow these simple steps to enjoy seamless delivery with ProFast.
         </p>
@@ -45,7 +45,7 @@ const HowItWorks = () => {
             >
               <div className="card-body items-center text-center">
                 {item.icon}
-                <h3 className="card-title mt-3">{item.title}</h3>
+                <h3 className="card-title text-primary mt-3">{item.title}</h3>
                 <p className="text-gray-600 text-sm">{item.desc}</p>
               </div>
             </div>

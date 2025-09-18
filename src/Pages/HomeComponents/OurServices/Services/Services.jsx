@@ -46,7 +46,7 @@ const Services = () => {
   return (
     <section className="py-16 bg-[#03373D] dark:bg-gray-900 transition-colors duration-300">
       <div className="container mx-auto px-4 text-center text-white">
-        <h2 className="text-4xl font-bold mb-4">Our Services</h2>
+        <h2 className="text-4xl font-bold  mb-4">Our Services</h2>
         <p className="max-w-2xl mx-auto mb-12 text-gray-300 dark:text-gray-400">
           Discover our wide range of logistics solutions designed to make your delivery experience fast, secure, and reliable.
         </p>

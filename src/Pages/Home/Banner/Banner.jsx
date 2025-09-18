@@ -10,21 +10,20 @@ const Banner = () => {
 	  <Carousel
 	  infiniteLoop={true}
 	  autoPlay={true}
-		  autoFocus={true}
 		  showThumbs={false}
 		  className="my-7"
 	  >
       <div>
         <img src={bannerImage1} />
-        <p className="legend hidden md:block">Booking Now</p>
+        
       </div>
       <div>
         <img src={bannerImage2} />
-        <p className="legend hidden md:block">Booking Now</p>
+        
       </div>
       <div>
         <img src={bannerImage3} />
-        <p className="legend hidden md:block">Booking Now</p>
+        
       </div>
     </Carousel>
   );
