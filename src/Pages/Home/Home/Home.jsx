@@ -6,6 +6,7 @@ import useTitle from '../../../Hooks/useTitle';
 import SalesTeamSection from '../../HomeComponents/SalesTeamSection/SalesTeamSection';
 import FeatureCards from '../../HomeComponents/FeatureCard/FeatureCard';
 import MerchantCard from '../../HomeComponents/MerchantSection/MerchantCard';
+import CustomersSaying from '../../HomeComponents/CustomersSayingSection/CustomersSaying';
 
 const Home = () => {
 	useTitle("Home")
@@ -17,6 +18,7 @@ const Home = () => {
 			<SalesTeamSection />
 			<FeatureCards />
 			<MerchantCard/>
+			<CustomersSaying/>
 		</div>
 	);
 };

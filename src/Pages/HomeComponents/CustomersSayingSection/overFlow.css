@@ -1,0 +1,11 @@
+.mySwiper {
+  overflow: visible !important;
+}
+
+.mySwiper .swiper-wrapper {
+  overflow: visible !important;
+}
+
+.mySwiper .swiper-slide {
+  overflow: visible !important;
+}
