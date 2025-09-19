@@ -29,7 +29,7 @@ const featuresData = [
 
 const FeatureCards = () => {
   return (
-    <div className="border-t-2 border-b-2 mb-5 border-dashed">
+    <div className="border-t-2 border-b-2 border-dashed">
       <section className="py-16 max-w-7xl mx-auto px-4 transition-colors duration-300">
         <div className="grid grid-cols-1  gap-6">
           {featuresData.map((feature) => (

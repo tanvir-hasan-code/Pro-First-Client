@@ -4,7 +4,14 @@
 @plugin "daisyui";
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake, nord, silk, night;
+  themes: light --default, dark, cupcake, nord, silk, night;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #CAEB66;
+  --color-merchant: #03373D;
 }
 
 

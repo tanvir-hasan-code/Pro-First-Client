@@ -5,6 +5,7 @@ import Services from '../../HomeComponents/OurServices/Services/Services';
 import useTitle from '../../../Hooks/useTitle';
 import SalesTeamSection from '../../HomeComponents/SalesTeamSection/SalesTeamSection';
 import FeatureCards from '../../HomeComponents/FeatureCard/FeatureCard';
+import MerchantCard from '../../HomeComponents/MerchantSection/MerchantCard';
 
 const Home = () => {
 	useTitle("Home")
@@ -14,7 +15,8 @@ const Home = () => {
 			<HowItWorks/>
 			<Services/>
 			<SalesTeamSection />
-			<FeatureCards/>
+			<FeatureCards />
+			<MerchantCard/>
 		</div>
 	);
 };
