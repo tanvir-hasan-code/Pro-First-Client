@@ -1,6 +1,5 @@
 import React from "react";
 import "swiper/css";
-import "./overFlow.css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import customerTop from "../../../assets/customer-top.png";
@@ -149,7 +148,7 @@ const CustomersSaying = () => {
             className="mySwiper "
           >
             {testimonials.map((t, index) => (
-              <SwiperSlide className="overflow-visible" key={index}>
+              <SwiperSlide key={index}>
                 {({ isActive }) => (
                   <div
                     className={`p-6 rounded-xl my-10 shadow-lg text-center transition-all duration-300 ${

@@ -7,6 +7,7 @@ import SalesTeamSection from '../../HomeComponents/SalesTeamSection/SalesTeamSec
 import FeatureCards from '../../HomeComponents/FeatureCard/FeatureCard';
 import MerchantCard from '../../HomeComponents/MerchantSection/MerchantCard';
 import CustomersSaying from '../../HomeComponents/CustomersSayingSection/CustomersSaying';
+import FAQ from '../../HomeComponents/FAQSection/FAQ';
 
 const Home = () => {
 	useTitle("Home")
@@ -18,7 +19,8 @@ const Home = () => {
 			<SalesTeamSection />
 			<FeatureCards />
 			<MerchantCard/>
-			<CustomersSaying/>
+			<CustomersSaying />
+			<FAQ/>
 		</div>
 	);
 };
