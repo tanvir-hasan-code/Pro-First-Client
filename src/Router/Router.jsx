@@ -4,6 +4,8 @@ import RootLayout from "../layouts/RootLayout";
 import Login from "../Auth/AuthenticationPage/Login/Login";
 import AuthLayout from "../layouts/AuthLayout";
 import Register from "../Auth/AuthenticationPage/Register/Register";
+import ForgetPassword from "../Auth/AuthenticationPage/ForgetPassword/ForgetPassword";
+import ResetPassword from "../Auth/AuthenticationPage/Resetpassword/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -20,12 +22,20 @@ export const router = createBrowserRouter([
     Component: AuthLayout,
     children: [
       {
-        path: "login",
+        path: "/login",
         Component: Login
       },
       {
-        path: "register",
+        path: "/register",
         Component: Register
+      },
+      {
+        path: "/forgetPassword",
+        Component: ForgetPassword
+      },
+      {
+        path: "/resetPassword",
+        Component: ResetPassword
       }
     ]
   }
