@@ -1,9 +1,41 @@
 import React from "react";
+import useAuth from "../../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const GoogleLogin = () => {
+  const { GoogleSignIn } = useAuth();
+  const handleGoogleSignIn = () => {
+    GoogleSignIn()
+      .then((user) => {
+        if (user) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Login Successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Google Login Failed",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  };
+
   return (
     <div className="w-full ">
-      <button className="btn bg-base-300 w-full text-black border-[#e5e5e5]">
+      <button
+        onClick={handleGoogleSignIn}
+        className="btn bg-base-300 w-full text-black border-[#e5e5e5]"
+      >
         <svg
           aria-label="Google logo"
           width="16"

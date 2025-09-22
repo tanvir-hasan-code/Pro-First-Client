@@ -3,6 +3,9 @@ import { Link } from "react-router";
 import GoogleLogin from "../LoginWithGoogle/GoogleLogin";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../Hooks/useAuth";
+import Swal from "sweetalert2";
+import { updateProfile } from "firebase/auth";
 
 const Register = () => {
   // React Hooks Form
@@ -12,8 +15,53 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const { createUser } = useAuth();
   const onSubmit = (data) => {
-    console.log(data);
+    const email = data.email;
+    const password = data.password;
+    const name = data.name;
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        updateProfile(user, {
+          displayName: name,
+        })
+          .then(() => {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Registration Successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((err) => {
+            if (err) {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Registration Failed",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      })
+      .catch((err) => {
+        if (err) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Registration failed!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  };
+
+  const handleGoogleSingIn = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -43,7 +91,7 @@ const Register = () => {
               placeholder="Name"
             />
             {errors.name?.type === "required" && (
-              <p className="text-red-600">Name  Required</p>
+              <p className="text-red-600">Name Required</p>
             )}
             {errors.name?.type === "minLength" && (
               <p className="text-red-600">Name Must Be 6 Character</p>
@@ -69,7 +117,7 @@ const Register = () => {
               placeholder="Password"
             />
             {errors.password?.type === "required" && (
-              <p className="text-red-600">Password  Required</p>
+              <p className="text-red-600">Password Required</p>
             )}
             {errors.password?.type === "minLength" && (
               <p className="text-red-600">Password Must Be 6 Character</p>
@@ -83,7 +131,10 @@ const Register = () => {
             </Link>
           </p>
           <p className="text-center text-primary">Or</p>
-          <div className="flex justify-center mt-5 ">
+          <div
+            onClick={handleGoogleSingIn}
+            className="flex justify-center mt-5 "
+          >
             <GoogleLogin />
           </div>
         </form>
