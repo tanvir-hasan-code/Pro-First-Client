@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { FaSearch } from "react-icons/fa";
@@ -14,13 +14,32 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png",
 });
 
+// FlyTo Component
+const FlyToLocation = ({ position }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    if (position) {
+      map.flyTo(position, 12, { duration: 2 }); // smooth animation
+    }
+  }, [position, map]);
+  return null;
+};
+
 const CoverageMap = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [flyPosition, setFlyPosition] = useState(null);
 
   // Filtered Data
   const filteredData = data.filter((item) =>
     item.district.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (filteredData.length > 0) {
+      setFlyPosition([filteredData[0].latitude, filteredData[0].longitude]);
+    }
+  };
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
@@ -32,7 +51,7 @@ const CoverageMap = () => {
       {/* Search Box */}
       <div className="flex justify-center mb-8">
         <form
-          onSubmit={(e) => e.preventDefault()} // prevent refresh
+          onSubmit={handleSearch} 
           className="flex items-center w-full max-w-md bg-gray-100 rounded-full shadow px-3 py-2"
         >
           <FaSearch className="text-gray-400 mr-2" />
@@ -62,14 +81,16 @@ const CoverageMap = () => {
       {/* Map Section */}
       <MapContainer
         center={[23.685, 90.3563]}
-        zoom={7}
-        style={{ height: "500px", width: "100%" }}
-        className="rounded-xl shadow-lg"
+        zoom={8}
+        style={{ height: "800px", width: "100%" }}
+        className="rounded-xl shadow-lg z-1"
       >
         <TileLayer
           attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {/* Fly Animation */}
+        <FlyToLocation position={flyPosition} />
 
         {filteredData.map((item, index) => (
           <Marker key={index} position={[item.latitude, item.longitude]}>

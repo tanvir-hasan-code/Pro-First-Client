@@ -12,11 +12,21 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/about">About Us</NavLink>
-      </li>
+      {user && (
+        <li>
+          <NavLink to="/sendParcel">Send Parcel</NavLink>
+        </li>
+      )}
       <li>
         <NavLink to="/coverage">Coverage</NavLink>
+      </li>
+      {user && (
+        <li>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+        </li>
+      )}
+      <li>
+        <NavLink to="/about">About Us</NavLink>
       </li>
     </>
   );
@@ -74,9 +84,9 @@ const Navbar = () => {
               {navItem}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">
+          <div className="btn btn-ghost text-xl">
             <ProFastLogo />
-          </a>
+          </div>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navItem}</ul>
@@ -102,7 +112,7 @@ const Navbar = () => {
             </svg>
           </label>
           {/* User  */}
-          {user? (
+          {user ? (
             <div>
               <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="btn m-1">
@@ -126,10 +136,22 @@ const Navbar = () => {
                 </ul>
               </div>
             </div>
-          ) : <div className="flex gap-1 ml-2">
-            <Link className="btn btn-primary text-white btn-sm md:btn-md" to={'/login'}>Login</Link>
-            <Link className="btn btn-success btn-sm md:btn-md" to={'/register'}>Register</Link>
-          </div>}
+          ) : (
+            <div className="flex gap-1 ml-2">
+              <Link
+                className="btn btn-primary text-white btn-sm md:btn-md"
+                to={"/login"}
+              >
+                Login
+              </Link>
+              <Link
+                className="btn btn-success btn-sm md:btn-md"
+                to={"/register"}
+              >
+                Register
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
