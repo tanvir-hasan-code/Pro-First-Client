@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import GoogleLogin from "../LoginWithGoogle/GoogleLogin";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
@@ -7,6 +7,9 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   const { signInUser } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+ const from = location?.state?.from || '/'
 
   const handleGoogleSingIn = (e) => {
     e.preventDefault();
@@ -33,6 +36,7 @@ const Login = () => {
             timer: 1500,
           });
         }
+        navigate(from)
       })
       .catch((error) => {
         if (error) {

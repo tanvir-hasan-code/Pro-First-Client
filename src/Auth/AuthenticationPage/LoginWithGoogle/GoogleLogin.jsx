@@ -1,9 +1,18 @@
 import React from "react";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router";
 
 const GoogleLogin = () => {
   const { GoogleSignIn } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location?.state?.from || '/';
+
+
+
+
+
   const handleGoogleSignIn = () => {
     GoogleSignIn()
       .then((user) => {
@@ -16,6 +25,7 @@ const GoogleLogin = () => {
             timer: 1500,
           });
         }
+        navigate(from)
       })
       .catch((err) => {
         if (err) {

@@ -38,7 +38,7 @@ const MyParcels = () => {
   const [copiedId, setCopiedId] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const { data: parcels, refetch } = useQuery({
+  const { data: parcels=[], refetch } = useQuery({
     queryKey: ["my-parcels", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
@@ -76,8 +76,8 @@ const MyParcels = () => {
                 title: "Your Parcel Has Been Deleted!",
                 showConfirmButton: false,
                 timer: 1500,
-			  });
-				refetch();
+              });
+              refetch();
             }
           })
           .catch((err) => {
@@ -97,7 +97,7 @@ const MyParcels = () => {
 
   return (
     <div className="w-full max-w-7xl mx-auto">
-		  <h1 className="text-3xl font-bold text-center mb-6">My Parcels</h1>
+      <h1 className="text-3xl font-bold text-center mb-6">My Parcels</h1>
 
       <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200">
         <table className="table w-full">
@@ -117,122 +117,128 @@ const MyParcels = () => {
           </thead>
 
           {/* Table Body */}
-				  <tbody>
-    
-	        {parcels?.length ? (
-				parcels?.map((parcel, index) => {
-              return (
-                <tr
-                  key={parcel._id}
-                  className="hover:bg-gray-50 text-sm transition"
-                >
-                  <td className="p-3 text-center">{index + 1}</td>
-                  <td className="p-3 text-center font-semibold">
-                    {parcel.title}
-                  </td>
+          <tbody>
+            {parcels?.length ? (
+              parcels?.map((parcel, index) => {
+                return (
+                  <tr
+                    key={parcel._id}
+                    className="hover:bg-gray-50 text-sm transition"
+                  >
+                    <td className="p-3 text-center">{index + 1}</td>
+                    <td className="p-3 text-center font-semibold">
+                      {parcel.title}
+                    </td>
 
-                  {/* Receiver Info */}
-                  <td className="p-3 text-center">
-                    <p className="font-medium">{parcel.receiverName}</p>
-                    <p className="text-xs text-gray-500">
-                      {parcel.receiverPhone}
-                    </p>
-                  </td>
+                    {/* Receiver Info */}
+                    <td className="p-3 text-center">
+                      <p className="font-medium">{parcel.receiverName}</p>
+                      <p className="text-xs text-gray-500">
+                        {parcel.receiverPhone}
+                      </p>
+                    </td>
 
-                  <td className="p-3 text-center">
-                    <span
-                      className={`px-2 py-1 rounded text-white text-xs ${
-                        parcel.parcelType === "document"
-                          ? "bg-green-500"
-                          : "bg-blue-500"
-                      }`}
-                    >
-                      {parcel.parcelType}
-                    </span>
-                  </td>
-
-                  {/* Tracking ID */}
-                  <td className="p-3 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-gray-700 font-mono">
-                        {parcel.trackingId}
-                      </span>
-                      <button
-                        onClick={() => handleCopy(parcel.trackingId)}
-                        className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs transition-all duration-200 ${
-                          copiedId === parcel.trackingId
-                            ? "bg-green-500 text-white"
-                            : "bg-blue-500 text-white hover:bg-blue-600"
+                    <td className="p-3 text-center">
+                      <span
+                        className={`px-2 py-1 rounded text-white text-xs ${
+                          parcel.parcelType === "document"
+                            ? "bg-green-500"
+                            : "bg-blue-500"
                         }`}
-                        title={
-                          copiedId === parcel.trackingId
-                            ? "Copied!"
-                            : "Copy Tracking ID"
-                        }
                       >
-                        {copiedId === parcel.trackingId ? (
-                          <>
-                            <Check size={14} /> Copied
-                          </>
-                        ) : (
-                          <>
-                            <Clipboard size={14} /> Copy
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </td>
+                        {parcel.parcelType}
+                      </span>
+                    </td>
 
-                  <td className="p-3 text-center font-bold text-blue-600">
-                    ৳{parcel.cost}
-                  </td>
-                  <td className="p-3 text-center">
-                    <span
-                      className={`px-2 py-1 rounded text-white text-xs ${
-                        parcel?.status ? "bg-green-600" : "bg-red-500"
-                      }`}
-                    >
-                      {parcel?.status ? "Paid" : "Unpaid"}
-                    </span>
-                  </td>
-                  <td className="p-3 text-center">
-                    {new Date(parcel.booking_date).toLocaleDateString()}
-                  </td>
+                    {/* Tracking ID */}
+                    <td className="p-3 text-center">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-gray-700 font-mono">
+                          {parcel.trackingId}
+                        </span>
+                        <button
+                          onClick={() => handleCopy(parcel.trackingId)}
+                          className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs transition-all duration-200 ${
+                            copiedId === parcel.trackingId
+                              ? "bg-green-500 text-white"
+                              : "bg-blue-500 text-white hover:bg-blue-600"
+                          }`}
+                          title={
+                            copiedId === parcel.trackingId
+                              ? "Copied!"
+                              : "Copy Tracking ID"
+                          }
+                        >
+                          {copiedId === parcel.trackingId ? (
+                            <>
+                              <Check size={14} /> Copied
+                            </>
+                          ) : (
+                            <>
+                              <Clipboard size={14} /> Copy
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </td>
 
-                  {/* Action Buttons */}
-                  <td className="p-3 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      <button
-                        onClick={() => handleView(parcel._id)}
-                        className="flex items-center gap-1 px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 text-xs"
+                    <td className="p-3 text-center font-bold text-blue-600">
+                      ৳{parcel.cost}
+                    </td>
+                    <td className="p-3 text-center">
+                      <span
+                        className={`px-2 py-1 rounded text-white text-xs ${
+                          parcel.status ? "bg-green-600" : "bg-red-500"
+                        }`}
                       >
-                        <Eye size={14} /> View
-                      </button>
-                      <button
-                        onClick={() => handleEdit(parcel._id)}
-                        className="flex items-center gap-1 px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs"
-                      >
-                        <Pencil size={14} /> Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(parcel._id)}
-                        className="flex items-center gap-1 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"
-                      >
-                        <Trash2 size={14} /> Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            }
-    )
-  ) : (
-    <tr>
-      <td colSpan={9} className="text-center p-3">
-        No parcels found
-      </td>
-    </tr>
-  )}
+                        {parcel?.status ? "Paid" : "Unpaid"}
+                      </span>
+                    </td>
+                    <td className="p-3 text-center">
+                      {new Date(parcel.booking_date).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hour12: true, 
+                      })}
+                    </td>
+
+                    {/* Action Buttons */}
+                    <td className="p-3 text-center">
+                      <div className="flex items-center justify-center gap-2">
+                        <button
+                          onClick={() => handleView(parcel._id)}
+                          className="flex items-center gap-1 px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 text-xs"
+                        >
+                          <Eye size={14} /> View
+                        </button>
+                        <button
+                          onClick={() => handleEdit(parcel._id)}
+                          className="flex items-center gap-1 px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs"
+                        >
+                          <Pencil size={14} /> Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(parcel._id)}
+                          className="flex items-center gap-1 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"
+                        >
+                          <Trash2 size={14} /> Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={9} className="text-center p-3">
+                  No parcels found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import GoogleLogin from "../LoginWithGoogle/GoogleLogin";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,12 @@ import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
 
 const Register = () => {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from || "/";
+
+
   // React Hooks Form
   const {
     register,
@@ -34,6 +40,7 @@ const Register = () => {
               showConfirmButton: false,
               timer: 1500,
             });
+            navigate(from)
           })
           .catch((err) => {
             if (err) {
