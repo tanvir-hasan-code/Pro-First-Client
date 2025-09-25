@@ -161,8 +161,8 @@ const SendParcel = () => {
     const parcelInfo = {
       ...data,
       cost,
-		booking_date: new Date().toISOString(),
-	  status: false,
+      booking_date: new Date().toISOString(),
+      status: false,
       createdBy: user.email,
       createdByUid: user.uid,
     };
@@ -286,15 +286,6 @@ const SendParcel = () => {
               <p className="text-red-500">{errors.senderPhone.message}</p>
             )}
 
-            <input
-              {...register("senderAddress")}
-              placeholder="Sender Address"
-              className="w-full border p-2 rounded mb-2"
-            />
-            {errors.senderAddress && (
-              <p className="text-red-500">{errors.senderAddress.message}</p>
-            )}
-
             <select
               {...register("senderRegion")}
               onChange={(e) => setSenderRegion(e.target.value)}
@@ -327,6 +318,14 @@ const SendParcel = () => {
             {errors.senderCenter && (
               <p className="text-red-500">{errors.senderCenter.message}</p>
             )}
+            <input
+              {...register("senderAddress")}
+              placeholder="Sender Address"
+              className="w-full border p-2 rounded mb-2"
+            />
+            {errors.senderAddress && (
+              <p className="text-red-500">{errors.senderAddress.message}</p>
+            )}
 
             <textarea
               {...register("pickupInstruction")}
@@ -354,15 +353,6 @@ const SendParcel = () => {
             />
             {errors.receiverPhone && (
               <p className="text-red-500">{errors.receiverPhone.message}</p>
-            )}
-
-            <input
-              {...register("receiverAddress")}
-              placeholder="Receiver Address"
-              className="w-full border p-2 rounded mb-2"
-            />
-            {errors.receiverAddress && (
-              <p className="text-red-500">{errors.receiverAddress.message}</p>
             )}
 
             <select
@@ -396,6 +386,14 @@ const SendParcel = () => {
             </select>
             {errors.receiverCenter && (
               <p className="text-red-500">{errors.receiverCenter.message}</p>
+            )}
+            <input
+              {...register("receiverAddress")}
+              placeholder="Receiver Address"
+              className="w-full border p-2 rounded mb-2"
+            />
+            {errors.receiverAddress && (
+              <p className="text-red-500">{errors.receiverAddress.message}</p>
             )}
 
             <textarea
