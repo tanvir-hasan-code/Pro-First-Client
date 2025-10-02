@@ -182,10 +182,10 @@ const SendParcel = () => {
                 : "Booking successful.",
             timer: 2000,
             showConfirmButton: false,
-          }).then(() => {
-            // Redirect to payment page
-            window.location.href = "/payment";
           });
+			setTimeout(() => {
+			  window.location.href = "/dashboard/myParcels";
+		  },2000)
         }
       })
       .catch((err) => {

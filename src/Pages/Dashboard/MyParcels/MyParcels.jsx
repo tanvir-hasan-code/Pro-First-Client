@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { MdOutlinePayments } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 // const parcels = [
 //   {
@@ -38,6 +40,7 @@ const MyParcels = () => {
   const [copiedId, setCopiedId] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+	const navigate = useNavigate();
   const { data: parcels=[], refetch } = useQuery({
     queryKey: ["my-parcels", user.email],
     queryFn: async () => {
@@ -53,7 +56,14 @@ const MyParcels = () => {
   };
 
   const handleView = (id) => alert(`View parcel: ${id}`);
-  const handleEdit = (id) => alert(`Edit parcel: ${id}`);
+	const handleEdit = (id) => alert(`Edit parcel: ${id}`);
+	
+	const handlePayment = (id) => {
+		navigate(`/dashboard/payment/${id}`)
+	}
+
+
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -215,12 +225,14 @@ const MyParcels = () => {
                         >
                           <Eye size={14} /> View
                         </button>
-                        <button
+                        {parcel?.status? <button
                           onClick={() => handleEdit(parcel._id)}
                           className="flex items-center gap-1 px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs"
                         >
                           <Pencil size={14} /> Edit
-                        </button>
+								</button> : <button onClick={() => handlePayment(parcel._id)} className="flex items-center gap-1 bg-[#caeb67] py-1  text-white rounded hover:bg-[#344F1F] text-xs px-2">
+								<MdOutlinePayments size={14}/> Pay
+								</button>}
                         <button
                           onClick={() => handleDelete(parcel._id)}
                           className="flex items-center gap-1 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"
