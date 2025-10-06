@@ -8,7 +8,9 @@ import {
   FaBox,
   FaSearchLocation,
   FaMoneyBill,
-  FaClock, FaMotorcycle
+  FaClock,
+  FaMotorcycle,
+  FaUserShield,
 } from "react-icons/fa";
 
 const DashboardLayout = () => {
@@ -112,6 +114,14 @@ const DashboardLayout = () => {
                 className="flex items-center gap-2"
               >
                 <FaMotorcycle /> Active Rider
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/make-admin"
+                className="flex items-center gap-2"
+              >
+                <FaUserShield /> Make Admin
               </NavLink>
             </li>
           </ul>

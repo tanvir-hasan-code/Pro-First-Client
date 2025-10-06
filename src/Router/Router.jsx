@@ -17,7 +17,8 @@ import PHistory from "../Pages/Dashboard/Payment/PaymentHistory/PHistory";
 import TrackingParcel from "../Pages/Dashboard/TrackingParcel/TrackingParcel";
 import BeARider from "../Pages/Components/BeARider/BeARider";
 import PendingRiders from "../Pages/Dashboard/PendingRiders/PendingRiders";
-import ActiveRiders from "../Pages/Dashboard/ActiveRider/ActiveRider";
+import ActiveRiders from "../Pages/Dashboard/ActiveRider/ActiveRiders";
+import MakeAdmin from "../Pages/Dashboard/MakeAdmin/MakeAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: "active-riders",
         Component: ActiveRiders
+      },
+      {
+        path: "make-admin",
+        Component: MakeAdmin
       }
     ]
   },
