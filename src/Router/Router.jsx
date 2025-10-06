@@ -15,6 +15,9 @@ import Payment from "../Pages/Dashboard/Payment/Payment";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import PHistory from "../Pages/Dashboard/Payment/PaymentHistory/PHistory";
 import TrackingParcel from "../Pages/Dashboard/TrackingParcel/TrackingParcel";
+import BeARider from "../Pages/Components/BeARider/BeARider";
+import PendingRiders from "../Pages/Dashboard/PendingRiders/PendingRiders";
+import ActiveRiders from "../Pages/Dashboard/ActiveRider/ActiveRider";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: "/coverage",
         Component: CoverageMap
+      },
+      {
+        path: "/beARider",
+        element: <PrivateRoute><BeARider/></PrivateRoute>
       }
     ],
   },
@@ -41,7 +48,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <h>THis Is My Home</h>
+        element: <h1>THis Is My Home</h1>
     },
       {
         path: "myParcels",
@@ -62,6 +69,14 @@ export const router = createBrowserRouter([
       {
         path: "tracking",
         Component: TrackingParcel
+      },
+      {
+        path: "pending-riders",
+        Component: PendingRiders
+      },
+      {
+        path: "active-riders",
+        Component: ActiveRiders
       }
     ]
   },

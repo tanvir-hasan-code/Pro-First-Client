@@ -165,6 +165,8 @@ const SendParcel = () => {
       status: false,
       createdBy: user.email,
       createdByUid: user.uid,
+      trackingHistory: [],
+      currentStatus: "Unpaid"
     };
 
     //  Send to server

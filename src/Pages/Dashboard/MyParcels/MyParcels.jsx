@@ -39,12 +39,14 @@ import { useNavigate } from "react-router";
 const MyParcels = () => {
   const [copiedId, setCopiedId] = useState(null);
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(true)
   const { user } = useAuth();
 	const navigate = useNavigate();
   const { data: parcels=[], refetch } = useQuery({
     queryKey: ["my-parcels", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
+      setLoading(false);
       return res.data;
     },
   });
@@ -60,7 +62,7 @@ const MyParcels = () => {
 	
 	const handlePayment = (id) => {
 		navigate(`/dashboard/payment/${id}`)
-	}
+  }
 
 
 
@@ -105,6 +107,10 @@ const MyParcels = () => {
     });
   };
 
+  if (loading) {
+    return "Loading......"
+  }
+
   return (
     <div className="w-full max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold text-center mb-6">My Parcels</h1>
@@ -125,6 +131,7 @@ const MyParcels = () => {
               <th className="p-3 text-center">Actions</th>
             </tr>
           </thead>
+
 
           {/* Table Body */}
           <tbody>

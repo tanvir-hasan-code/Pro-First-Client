@@ -2,12 +2,14 @@ import React from "react";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
+import useAxios from "../../../Hooks/useAxios";
 
 const GoogleLogin = () => {
   const { GoogleSignIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from || '/';
+  const axiosInstance = useAxios();
 
 
 
@@ -15,8 +17,21 @@ const GoogleLogin = () => {
 
   const handleGoogleSignIn = () => {
     GoogleSignIn()
-      .then((user) => {
-        if (user) {
+      .then(async(result) => {
+
+        const user = result.user;
+
+        const userInfo = {
+              email: user.email,
+              role: "user",
+              created_at: new Date().toISOString(),
+              last_log_in: new Date().toISOString()
+        }
+        
+        const userRes = await axiosInstance.post("/users", userInfo)
+        console.log(userRes)
+
+        if (result) {
           Swal.fire({
             position: "center",
             icon: "success",

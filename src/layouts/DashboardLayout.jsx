@@ -1,12 +1,14 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router";
 import ProFastLogo from "../Pages/Shared/ProFastLogo/ProFastLogo";
+import { UserLock } from "lucide-react";
 import {
   FaHome,
   FaUser,
   FaBox,
   FaSearchLocation,
   FaMoneyBill,
+  FaClock, FaMotorcycle
 } from "react-icons/fa";
 
 const DashboardLayout = () => {
@@ -94,6 +96,22 @@ const DashboardLayout = () => {
                 className="flex items-center gap-2"
               >
                 <FaMoneyBill /> Payment History
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/pending-riders"
+                className="flex items-center gap-2"
+              >
+                <FaClock /> Pending Rider
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/active-riders"
+                className="flex items-center gap-2"
+              >
+                <FaMotorcycle /> Active Rider
               </NavLink>
             </li>
           </ul>

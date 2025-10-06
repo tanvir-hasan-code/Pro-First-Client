@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import GoogleLogin from "../LoginWithGoogle/GoogleLogin";
 import { MdDriveFolderUpload } from "react-icons/md";
@@ -6,9 +6,13 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
+import axios from "axios";
+import useAxios from "../../../Hooks/useAxios";
 
 const Register = () => {
 
+  const [profilePic, setProfilePic] = useState('')
+  const axiosInstance = useAxios();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from || "/";
@@ -31,8 +35,20 @@ const Register = () => {
         const user = result.user;
         updateProfile(user, {
           displayName: name,
+          photoURL: profilePic
         })
-          .then(() => {
+          .then(async() => {
+
+            const userInfo = {
+              email: data.email,
+              role: "user",
+              created_at: new Date().toISOString(),
+              last_log_in: new Date().toISOString()
+            }
+
+            const userRes = await axiosInstance.post("/users", userInfo);
+            console.log(userRes)
+
             Swal.fire({
               position: "center",
               icon: "success",
@@ -71,6 +87,17 @@ const Register = () => {
     e.preventDefault();
   };
 
+  const handleImageUpload = async(e) => {
+    e.preventDefault();
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image)
+    const profileURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_profile_upload_key}`
+    const {data} = await axios.post(profileURL, formData)
+
+    setProfilePic(data.data.url)
+  }
+
   return (
     <section className=" lg:px-16 ">
       <div className="mx-auto">
@@ -87,6 +114,7 @@ const Register = () => {
           <fieldset className="fieldset">
             <label className="p-2 rounded-full bg-base-300 w-fit">
               <MdDriveFolderUpload size={32} />
+              <input type="file" className="hidden" onChange={handleImageUpload}/>
             </label>
 
             {/* Name Field */}
