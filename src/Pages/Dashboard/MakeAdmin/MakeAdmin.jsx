@@ -21,8 +21,8 @@ const MakeAdmin = () => {
 
   // 🔹 Make Admin Mutation
   const makeAdminMutation = useMutation({
-    mutationFn: async (id) => {
-      await axiosSecure.patch(`/users/make-admin/${id}`);
+    mutationFn: async ({ id, previousRole }) => {
+      await axiosSecure.patch(`/users/make-admin/${id}`, { previousRole });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["users", search]);
@@ -32,7 +32,7 @@ const MakeAdmin = () => {
 
   // 🔹 Remove Admin Mutation
   const removeAdminMutation = useMutation({
-    mutationFn: async (id) => {
+    mutationFn: async ({ id }) => {
       await axiosSecure.patch(`/users/remove-admin/${id}`);
     },
     onSuccess: () => {
@@ -40,6 +40,38 @@ const MakeAdmin = () => {
       Swal.fire("🗑 Removed!", "Admin role removed", "info");
     },
   });
+
+  const handleMakeAdmin = (user) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Make ${user.email} an Admin?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#caeb66",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Make Admin!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        makeAdminMutation.mutate({ id: user._id, previousRole: user.role });
+      }
+    });
+  };
+
+  const handleRemoveAdmin = (user) => {
+    Swal.fire({
+      title: "Remove Admin?",
+      text: "This will remove admin privileges!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Remove!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeAdminMutation.mutate({ id: user._id });
+      }
+    });
+  };
 
   return (
     <div className="w-full max-w-6xl mx-auto p-6">
@@ -114,19 +146,17 @@ const MakeAdmin = () => {
                       <td className="p-3 text-center">
                         {new Date(user.created_at).toLocaleDateString()}
                       </td>
-                      <td className="p-3 text-center">
+                      <td className="p-3 text-center flex justify-center">
                         {user.role === "admin" ? (
                           <button
-                            onClick={() =>
-                              removeAdminMutation.mutate(user._id)
-                            }
-                            className="btn btn-xs bg-red-500 hover:bg-red-600 text-white border-none flex items-center gap-1"
+                            onClick={() => handleRemoveAdmin(user)}
+                            className="btn   btn-xs bg-red-500 hover:bg-red-600 text-white border-none flex items-center  gap-1"
                           >
                             <ShieldX size={14} /> Remove Admin
                           </button>
                         ) : (
                           <button
-                            onClick={() => makeAdminMutation.mutate(user._id)}
+                            onClick={() => handleMakeAdmin(user)}
                             className="btn btn-xs bg-[#caeb66] hover:bg-[#b4d85a] text-gray-800 border-none flex items-center gap-1"
                           >
                             <ShieldCheck size={14} /> Make Admin

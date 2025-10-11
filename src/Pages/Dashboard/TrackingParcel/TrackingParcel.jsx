@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { FaCheckCircle } from "react-icons/fa";
 
 const TrackingParcel = () => {
   const axiosSecure = useAxiosSecure();
@@ -17,9 +18,7 @@ const TrackingParcel = () => {
     setParcel(null);
 
     try {
-      const res = await axiosSecure.get(
-        `/parcel/tracking?trackingId=${trackingId}`
-      );
+      const res = await axiosSecure.get(`/parcel/tracking?trackingId=${trackingId}`);
       setParcel(res.data);
     } catch (err) {
       setError(err.response?.data?.message || "Parcel not found");
@@ -29,8 +28,10 @@ const TrackingParcel = () => {
   };
 
   return (
-    <div className="py-5 px-1 mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center">Parcel Tracking</h1>
+    <div className="py-5 px-2 mx-auto max-w-4xl">
+      <h1 className="text-3xl font-bold mb-6 text-center text-primary">
+        📦 Parcel Tracking
+      </h1>
 
       {/* Search Bar */}
       <form onSubmit={handleSearch} className="flex justify-center mb-8">
@@ -41,7 +42,7 @@ const TrackingParcel = () => {
           onChange={(e) => setTrackingId(e.target.value)}
           className="input input-bordered w-1/2 mr-2"
         />
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn bg-[#caeb66] border-none text-black hover:bg-[#b4d84d]">
           Search
         </button>
       </form>
@@ -52,172 +53,51 @@ const TrackingParcel = () => {
 
       {/* Timeline */}
       {parcel && (
-        <div className="timeline bg-base-100 p-5 overflow-auto rounded-2xl shadow-lg">
-          <ul className="timeline">
-            <li>
-              <div className="timeline-end timeline-box">
-                {parcel?.currentStatus}
-              </div>
-              <div className="timeline-middle">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="text-primary h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <hr className="bg-primary" />
-            </li>
-            <li>
-              <div className="timeline-start timeline-box">
-                Collected
-              </div>
-              <div className="timeline-middle">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="text-primary h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <hr className="bg-primary" />
-            </li>
-            <li>
-              <hr className="bg-primary" />
-              <div className="timeline-middle">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="text-primary h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div className="timeline-end timeline-box">
-                {parcel?.senderCenter}
-              </div>
-              <hr className="bg-primary" />
-            </li>
-            <li>
-              <hr className="bg-primary" />
-              <div className="timeline-start timeline-box">
-                {parcel?.senderRegion}
-              </div>
-              <div className="timeline-middle">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="text-primary h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <hr />
-            </li>
-            <li>
-              <hr />
-              <div className="timeline-middle">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div className="timeline-end timeline-box">
-                {parcel?.receiverRegion}
-              </div>
-              <hr />
-            </li>
-            <li>
-              <hr />
-              <div className="timeline-start timeline-box">
-                {parcel?.receiverCenter}
-              </div>
-              <div className="timeline-middle">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </li>
-            <li>
-              <hr />
-              <div className="timeline-start timeline-box">
-                {parcel?.receiverCenter}
-              </div>
-              <div className="timeline-middle">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </li>
-            <li>
-              <hr />
-              <div className="timeline-start timeline-box">
-                {parcel?.receiverCenter}
-              </div>
-              <div className="timeline-middle">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </li>
-          </ul>
+        <div className="bg-base-100 p-6 rounded-2xl shadow-lg border border-[#caeb66]">
+          <h2 className="text-xl font-semibold mb-3 text-center text-gray-700">
+            Current Status:{" "}
+            <span className="text-green-600">{parcel?.currentStatus}</span>
+          </h2>
+
+          {parcel?.trackingHistory?.length > 0 ? (
+            <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+              {parcel.trackingHistory.map((step, index) => (
+                <li key={index}>
+                  {index !== 0 && <hr />}
+                  <div className="timeline-middle">
+                    <FaCheckCircle className="text-[#caeb66] h-6 w-6" />
+                  </div>
+                  <div
+                    className={`timeline-box bg-gradient-to-r from-[#f3fce2] to-[#e6f9c5] text-gray-700`}
+                  >
+                    <p className="font-semibold text-lg">{step.status}</p>
+                    {step.message && (
+                      <p className="text-sm text-gray-600 mt-1 italic">
+                        {step.message}
+                      </p>
+                    )}
+                    <p className="text-xs text-gray-500 mt-2">
+                      {new Date(step.timestamp || step.date).toLocaleString()}
+                    </p>
+
+                    {(step.sentFromDistrict || step.sentFromRegion) && (
+                      <p className="text-xs mt-2 text-gray-700">
+                        Sent from{" "}
+                        <span className="font-semibold">
+                          {step.sentFromDistrict || step.sentFromRegion}
+                        </span>
+                      </p>
+                    )}
+                  </div>
+                  {index !== parcel.trackingHistory.length - 1 && <hr />}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-center text-gray-500">
+              No tracking history found.
+            </p>
+          )}
         </div>
       )}
     </div>

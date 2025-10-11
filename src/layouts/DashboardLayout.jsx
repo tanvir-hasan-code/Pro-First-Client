@@ -1,7 +1,8 @@
 import React from "react";
+import "./DashboardLayout.css";
 import { NavLink, Outlet } from "react-router";
 import ProFastLogo from "../Pages/Shared/ProFastLogo/ProFastLogo";
-import { UserLock } from "lucide-react";
+import { Bike, UserLock } from "lucide-react";
 import {
   FaHome,
   FaUser,
@@ -11,9 +12,15 @@ import {
   FaClock,
   FaMotorcycle,
   FaUserShield,
+  FaTruck,
+  FaMoneyBillWave,
 } from "react-icons/fa";
+import useUserRole from "../Hooks/useUserRole";
+import { MdPending } from "react-icons/md";
 
 const DashboardLayout = () => {
+  const { role, isLoading } = useUserRole();
+
   return (
     <section>
       <div className="drawer lg:drawer-open">
@@ -64,7 +71,15 @@ const DashboardLayout = () => {
           ></label>
           <ul className="menu bg-base-200 h-screen overflow-hidden  w-60 p-4">
             <li>
-              <NavLink to="/dashboard" className="flex items-center gap-2">
+              <NavLink
+                to="/dashboard"
+                end
+                className={({ isActive }) =>
+                  isActive
+                    ? "active flex items-center gap-2"
+                    : "flex items-center gap-2"
+                }
+              >
                 <FaHome /> Home
               </NavLink>
             </li>
@@ -100,30 +115,73 @@ const DashboardLayout = () => {
                 <FaMoneyBill /> Payment History
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/dashboard/pending-riders"
-                className="flex items-center gap-2"
-              >
-                <FaClock /> Pending Rider
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/dashboard/active-riders"
-                className="flex items-center gap-2"
-              >
-                <FaMotorcycle /> Active Rider
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/dashboard/make-admin"
-                className="flex items-center gap-2"
-              >
-                <FaUserShield /> Make Admin
-              </NavLink>
-            </li>
+
+            {!isLoading && role === "rider" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/pending-delivery"
+                    className="flex items-center gap-2"
+                  >
+                    <MdPending /> Pending Delivery
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/complete-delivery"
+                    className="flex items-center gap-2"
+                  >
+                    <FaTruck /> Complete Delivery
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {!isLoading && role === "admin" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/assign-rider"
+                    className="flex items-center gap-2"
+                  >
+                    <Bike /> Assign Rider
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/pending-riders"
+                    className="flex items-center gap-2"
+                  >
+                    <FaClock /> Pending Rider
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/active-riders"
+                    className="flex items-center gap-2"
+                  >
+                    <FaMotorcycle /> Active Rider
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/make-admin"
+                    className="flex items-center gap-2"
+                  >
+                    <FaUserShield /> Make Admin
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/cashOut-requests"
+                    className="flex items-center gap-2"
+                  >
+                    <FaMoneyBillWave /> Cash Out Request
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

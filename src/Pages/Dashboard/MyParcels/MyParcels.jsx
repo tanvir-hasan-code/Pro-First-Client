@@ -6,6 +6,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { MdOutlinePayments } from "react-icons/md";
 import { useNavigate } from "react-router";
+import LoadingPage from "../../../LoadingPage/LoadingPage";
 
 // const parcels = [
 //   {
@@ -39,10 +40,10 @@ import { useNavigate } from "react-router";
 const MyParcels = () => {
   const [copiedId, setCopiedId] = useState(null);
   const axiosSecure = useAxiosSecure();
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-	const navigate = useNavigate();
-  const { data: parcels=[], refetch } = useQuery({
+  const navigate = useNavigate();
+  const { data: parcels = [], refetch } = useQuery({
     queryKey: ["my-parcels", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
@@ -58,13 +59,11 @@ const MyParcels = () => {
   };
 
   const handleView = (id) => alert(`View parcel: ${id}`);
-	const handleEdit = (id) => alert(`Edit parcel: ${id}`);
-	
-	const handlePayment = (id) => {
-		navigate(`/dashboard/payment/${id}`)
-  }
+  const handleEdit = (id) => alert(`Edit parcel: ${id}`);
 
-
+  const handlePayment = (id) => {
+    navigate(`/dashboard/payment/${id}`);
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -108,7 +107,7 @@ const MyParcels = () => {
   };
 
   if (loading) {
-    return "Loading......"
+    return <LoadingPage />;
   }
 
   return (
@@ -131,7 +130,6 @@ const MyParcels = () => {
               <th className="p-3 text-center">Actions</th>
             </tr>
           </thead>
-
 
           {/* Table Body */}
           <tbody>
@@ -205,10 +203,10 @@ const MyParcels = () => {
                     <td className="p-3 text-center">
                       <span
                         className={`px-2 py-1 rounded text-white text-xs ${
-                          parcel.status ? "bg-green-600" : "bg-red-500"
+                          parcel.paid_status ? "bg-green-600" : "bg-red-500"
                         }`}
                       >
-                        {parcel?.status ? "Paid" : "Unpaid"}
+                        {parcel?.paid_status ? "Paid" : "Unpaid"}
                       </span>
                     </td>
                     <td className="p-3 text-center">
@@ -219,7 +217,7 @@ const MyParcels = () => {
                         hour: "2-digit",
                         minute: "2-digit",
                         second: "2-digit",
-                        hour12: true, 
+                        hour12: true,
                       })}
                     </td>
 
@@ -232,14 +230,21 @@ const MyParcels = () => {
                         >
                           <Eye size={14} /> View
                         </button>
-                        {parcel?.status? <button
-                          onClick={() => handleEdit(parcel._id)}
-                          className="flex items-center gap-1 px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs"
-                        >
-                          <Pencil size={14} /> Edit
-								</button> : <button onClick={() => handlePayment(parcel._id)} className="flex items-center gap-1 bg-[#caeb67] py-1  text-white rounded hover:bg-[#344F1F] text-xs px-2">
-								<MdOutlinePayments size={14}/> Pay
-								</button>}
+                        {parcel?.paid_status ? (
+                          <button
+                            onClick={() => handleEdit(parcel._id)}
+                            className="flex items-center gap-1 px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 text-xs"
+                          >
+                            <Pencil size={14} /> Edit
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handlePayment(parcel._id)}
+                            className="flex items-center gap-1 bg-[#caeb67] py-1  text-white rounded hover:bg-[#344F1F] text-xs px-2"
+                          >
+                            <MdOutlinePayments size={14} /> Pay
+                          </button>
+                        )}
                         <button
                           onClick={() => handleDelete(parcel._id)}
                           className="flex items-center gap-1 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"

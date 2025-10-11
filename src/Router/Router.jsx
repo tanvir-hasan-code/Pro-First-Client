@@ -19,6 +19,14 @@ import BeARider from "../Pages/Components/BeARider/BeARider";
 import PendingRiders from "../Pages/Dashboard/PendingRiders/PendingRiders";
 import ActiveRiders from "../Pages/Dashboard/ActiveRider/ActiveRiders";
 import MakeAdmin from "../Pages/Dashboard/MakeAdmin/MakeAdmin";
+import ForbiddenPage from "../Pages/ForbiddenPage/ForbiddenPage";
+import AdminRole from "../Route/AdminRole";
+import AssignRider from "../Pages/Dashboard/AssignRider/AssignRider";
+import RiderRole from "../Route/RiderRole";
+import PendingDelivery from "../Pages/Dashboard/PendingDelivery/PendingDelivery";
+import CompleteDelivery from "../Pages/Dashboard/CompleteDelivery/CompleteDelivery";
+import CashOutRequest from "../Pages/Dashboard/CashOutRequest/CashOutRequest";
+import DashboardHome from "../Components/DashboardHome/DashboardHome";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "/beARider",
         element: <PrivateRoute><BeARider/></PrivateRoute>
+      },
+      {
+        path: "/forbidden",
+        Component: ForbiddenPage
       }
     ],
   },
@@ -49,7 +61,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <h1>THis Is My Home</h1>
+        Component: DashboardHome
     },
       {
         path: "myParcels",
@@ -72,16 +84,32 @@ export const router = createBrowserRouter([
         Component: TrackingParcel
       },
       {
+        path: "assign-rider",
+        element: <AdminRole><AssignRider/></AdminRole>
+      },
+      {
         path: "pending-riders",
-        Component: PendingRiders
+        element: <AdminRole><PendingRiders/></AdminRole>
       },
       {
         path: "active-riders",
-        Component: ActiveRiders
+        element: <AdminRole><ActiveRiders/></AdminRole>
       },
       {
         path: "make-admin",
-        Component: MakeAdmin
+        element: <AdminRole><MakeAdmin/></AdminRole>
+      },
+      {
+        path: "pending-delivery",
+        element: <RiderRole><PendingDelivery/></RiderRole>
+      },
+      {
+        path: "complete-delivery",
+        element: <RiderRole><CompleteDelivery/></RiderRole>
+      },
+      {
+        path: "cashOut-requests",
+        element: <AdminRole><CashOutRequest/></AdminRole>
       }
     ]
   },

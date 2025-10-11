@@ -162,7 +162,7 @@ const SendParcel = () => {
       ...data,
       cost,
       booking_date: new Date().toISOString(),
-      status: false,
+      paid_status: false,
       createdBy: user.email,
       createdByUid: user.uid,
       trackingHistory: [],
